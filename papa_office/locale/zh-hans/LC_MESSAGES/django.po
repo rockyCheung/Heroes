@@ -1,0 +1,389 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-01-05 15:31+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: papa_office/settings.py:132
+msgid "Afrikaans"
+msgstr ""
+
+#: papa_office/settings.py:133
+msgid "Arabic"
+msgstr ""
+
+#: papa_office/settings.py:134
+msgid "Asturian"
+msgstr ""
+
+#: papa_office/settings.py:135
+msgid "Azerbaijani"
+msgstr ""
+
+#: papa_office/settings.py:136
+msgid "Bulgarian"
+msgstr ""
+
+#: papa_office/settings.py:137
+msgid "Belarusian"
+msgstr ""
+
+#: papa_office/settings.py:138
+msgid "Bengali"
+msgstr ""
+
+#: papa_office/settings.py:139
+msgid "Breton"
+msgstr ""
+
+#: papa_office/settings.py:140
+msgid "Bosnian"
+msgstr ""
+
+#: papa_office/settings.py:141
+msgid "Catalan"
+msgstr ""
+
+#: papa_office/settings.py:142
+msgid "Czech"
+msgstr ""
+
+#: papa_office/settings.py:143
+msgid "Welsh"
+msgstr ""
+
+#: papa_office/settings.py:144
+msgid "Danish"
+msgstr ""
+
+#: papa_office/settings.py:145
+msgid "German"
+msgstr ""
+
+#: papa_office/settings.py:146
+msgid "Lower Sorbian"
+msgstr ""
+
+#: papa_office/settings.py:147
+msgid "Greek"
+msgstr ""
+
+#: papa_office/settings.py:148
+msgid "English"
+msgstr ""
+
+#: papa_office/settings.py:149
+msgid "Australian English"
+msgstr ""
+
+#: papa_office/settings.py:150
+msgid "British English"
+msgstr ""
+
+#: papa_office/settings.py:151
+msgid "Esperanto"
+msgstr ""
+
+#: papa_office/settings.py:152
+msgid "Spanish"
+msgstr ""
+
+#: papa_office/settings.py:153
+msgid "Argentinian Spanish"
+msgstr ""
+
+#: papa_office/settings.py:154
+msgid "Colombian Spanish"
+msgstr ""
+
+#: papa_office/settings.py:155
+msgid "Mexican Spanish"
+msgstr ""
+
+#: papa_office/settings.py:156
+msgid "Nicaraguan Spanish"
+msgstr ""
+
+#: papa_office/settings.py:157
+msgid "Venezuelan Spanish"
+msgstr ""
+
+#: papa_office/settings.py:158
+msgid "Estonian"
+msgstr ""
+
+#: papa_office/settings.py:159
+msgid "Basque"
+msgstr ""
+
+#: papa_office/settings.py:160
+msgid "Persian"
+msgstr ""
+
+#: papa_office/settings.py:161
+msgid "Finnish"
+msgstr ""
+
+#: papa_office/settings.py:162
+msgid "French"
+msgstr ""
+
+#: papa_office/settings.py:163
+msgid "Frisian"
+msgstr ""
+
+#: papa_office/settings.py:164
+msgid "Irish"
+msgstr ""
+
+#: papa_office/settings.py:165
+msgid "Scottish Gaelic"
+msgstr ""
+
+#: papa_office/settings.py:166
+msgid "Galician"
+msgstr ""
+
+#: papa_office/settings.py:167
+msgid "Hebrew"
+msgstr ""
+
+#: papa_office/settings.py:168
+msgid "Hindi"
+msgstr ""
+
+#: papa_office/settings.py:169
+msgid "Croatian"
+msgstr ""
+
+#: papa_office/settings.py:170
+msgid "Upper Sorbian"
+msgstr ""
+
+#: papa_office/settings.py:171
+msgid "Hungarian"
+msgstr ""
+
+#: papa_office/settings.py:172
+msgid "Interlingua"
+msgstr ""
+
+#: papa_office/settings.py:173
+msgid "Indonesian"
+msgstr ""
+
+#: papa_office/settings.py:174
+msgid "Ido"
+msgstr ""
+
+#: papa_office/settings.py:175
+msgid "Icelandic"
+msgstr ""
+
+#: papa_office/settings.py:176
+msgid "Italian"
+msgstr ""
+
+#: papa_office/settings.py:177
+msgid "Japanese"
+msgstr ""
+
+#: papa_office/settings.py:178
+msgid "Georgian"
+msgstr ""
+
+#: papa_office/settings.py:179
+msgid "Kabyle"
+msgstr ""
+
+#: papa_office/settings.py:180
+msgid "Kazakh"
+msgstr ""
+
+#: papa_office/settings.py:181
+msgid "Khmer"
+msgstr ""
+
+#: papa_office/settings.py:182
+msgid "Kannada"
+msgstr ""
+
+#: papa_office/settings.py:183
+msgid "Korean"
+msgstr ""
+
+#: papa_office/settings.py:184
+msgid "Luxembourgish"
+msgstr ""
+
+#: papa_office/settings.py:185
+msgid "Lithuanian"
+msgstr ""
+
+#: papa_office/settings.py:186
+msgid "Latvian"
+msgstr ""
+
+#: papa_office/settings.py:187
+msgid "Macedonian"
+msgstr ""
+
+#: papa_office/settings.py:188
+msgid "Malayalam"
+msgstr ""
+
+#: papa_office/settings.py:189
+msgid "Mongolian"
+msgstr ""
+
+#: papa_office/settings.py:190
+msgid "Marathi"
+msgstr ""
+
+#: papa_office/settings.py:191
+msgid "Burmese"
+msgstr ""
+
+#: papa_office/settings.py:192
+msgid "Norwegian Bokmål"
+msgstr ""
+
+#: papa_office/settings.py:193
+msgid "Nepali"
+msgstr ""
+
+#: papa_office/settings.py:194
+msgid "Dutch"
+msgstr ""
+
+#: papa_office/settings.py:195
+msgid "Norwegian Nynorsk"
+msgstr ""
+
+#: papa_office/settings.py:196
+msgid "Ossetic"
+msgstr ""
+
+#: papa_office/settings.py:197
+msgid "Punjabi"
+msgstr ""
+
+#: papa_office/settings.py:198
+msgid "Polish"
+msgstr ""
+
+#: papa_office/settings.py:199
+msgid "Portuguese"
+msgstr ""
+
+#: papa_office/settings.py:200
+msgid "Brazilian Portuguese"
+msgstr ""
+
+#: papa_office/settings.py:201
+msgid "Romanian"
+msgstr ""
+
+#: papa_office/settings.py:202
+msgid "Russian"
+msgstr ""
+
+#: papa_office/settings.py:203
+msgid "Slovak"
+msgstr ""
+
+#: papa_office/settings.py:204
+msgid "Slovenian"
+msgstr ""
+
+#: papa_office/settings.py:205
+msgid "Albanian"
+msgstr ""
+
+#: papa_office/settings.py:206
+msgid "Serbian"
+msgstr ""
+
+#: papa_office/settings.py:207
+msgid "Serbian Latin"
+msgstr ""
+
+#: papa_office/settings.py:208
+msgid "Swedish"
+msgstr ""
+
+#: papa_office/settings.py:209
+msgid "Swahili"
+msgstr ""
+
+#: papa_office/settings.py:210
+msgid "Tamil"
+msgstr ""
+
+#: papa_office/settings.py:211
+msgid "Telugu"
+msgstr ""
+
+#: papa_office/settings.py:212
+msgid "Thai"
+msgstr ""
+
+#: papa_office/settings.py:213
+msgid "Turkish"
+msgstr ""
+
+#: papa_office/settings.py:214
+msgid "Tatar"
+msgstr ""
+
+#: papa_office/settings.py:215
+msgid "Udmurt"
+msgstr ""
+
+#: papa_office/settings.py:216
+msgid "Ukrainian"
+msgstr ""
+
+#: papa_office/settings.py:217
+msgid "Urdu"
+msgstr ""
+
+#: papa_office/settings.py:218
+msgid "Vietnamese"
+msgstr ""
+
+#: papa_office/settings.py:219
+msgid "Simplified Chinese"
+msgstr ""
+
+#: papa_office/settings.py:220
+msgid "Traditional Chinese"
+msgstr ""
+
+#: papa_office/view.py:18
+msgid "msg.0003"
+msgstr "用户不存在"
+
+#: papa_office/view.py:62
+msgid "Welcome to my site."
+msgstr "欢迎来到我的网站"
+
+#: templates/hello.html:9
+msgid "user does not exist"
+msgstr "用户不存在"
+
+#~ msgid "用户不存在"
+#~ msgstr "user does not exist"

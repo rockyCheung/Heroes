@@ -15,6 +15,12 @@ import os
 from pymodm import connect
 import sys
 
+def gettext_noop(s):
+    return s
+
+#一个错误码消息数组当 DEBUG=False ，并且一个视图引发了异常, Django 会给这些人发一封含有完整异常信息的电子邮件。元组的每个成员应该是一个(姓名全称，电子邮件地址)的元组
+(('Rocky', '274935730@qq.com'), ('Rocky', 'zhangpenghong@pengpengw.com'))
+
 #sys.path.append('/Users/zhangpenghong/Documents/workspace10/Lambda')
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -45,6 +51,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -77,7 +84,6 @@ WSGI_APPLICATION = 'papa_office.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-# connect('mongodb://192.168.1.178:27017/cobra',alias="cabra-connection")
 
 DATABASES = {
     'default': {
@@ -109,9 +115,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
+# LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hans'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
@@ -119,6 +125,100 @@ USE_L10N = True
 
 USE_TZ = True
 
+USE_THOUSAND_SEPARATOR = True
+
+# Languages we provide translations for, out of the box.
+LANGUAGES = [
+    ('af', gettext_noop('Afrikaans')),
+    ('ar', gettext_noop('Arabic')),
+    ('ast', gettext_noop('Asturian')),
+    ('az', gettext_noop('Azerbaijani')),
+    ('bg', gettext_noop('Bulgarian')),
+    ('be', gettext_noop('Belarusian')),
+    ('bn', gettext_noop('Bengali')),
+    ('br', gettext_noop('Breton')),
+    ('bs', gettext_noop('Bosnian')),
+    ('ca', gettext_noop('Catalan')),
+    ('cs', gettext_noop('Czech')),
+    ('cy', gettext_noop('Welsh')),
+    ('da', gettext_noop('Danish')),
+    ('de', gettext_noop('German')),
+    ('dsb', gettext_noop('Lower Sorbian')),
+    ('el', gettext_noop('Greek')),
+    ('en', gettext_noop('English')),
+    ('en-au', gettext_noop('Australian English')),
+    ('en-gb', gettext_noop('British English')),
+    ('eo', gettext_noop('Esperanto')),
+    ('es', gettext_noop('Spanish')),
+    ('es-ar', gettext_noop('Argentinian Spanish')),
+    ('es-co', gettext_noop('Colombian Spanish')),
+    ('es-mx', gettext_noop('Mexican Spanish')),
+    ('es-ni', gettext_noop('Nicaraguan Spanish')),
+    ('es-ve', gettext_noop('Venezuelan Spanish')),
+    ('et', gettext_noop('Estonian')),
+    ('eu', gettext_noop('Basque')),
+    ('fa', gettext_noop('Persian')),
+    ('fi', gettext_noop('Finnish')),
+    ('fr', gettext_noop('French')),
+    ('fy', gettext_noop('Frisian')),
+    ('ga', gettext_noop('Irish')),
+    ('gd', gettext_noop('Scottish Gaelic')),
+    ('gl', gettext_noop('Galician')),
+    ('he', gettext_noop('Hebrew')),
+    ('hi', gettext_noop('Hindi')),
+    ('hr', gettext_noop('Croatian')),
+    ('hsb', gettext_noop('Upper Sorbian')),
+    ('hu', gettext_noop('Hungarian')),
+    ('ia', gettext_noop('Interlingua')),
+    ('id', gettext_noop('Indonesian')),
+    ('io', gettext_noop('Ido')),
+    ('is', gettext_noop('Icelandic')),
+    ('it', gettext_noop('Italian')),
+    ('ja', gettext_noop('Japanese')),
+    ('ka', gettext_noop('Georgian')),
+    ('kab', gettext_noop('Kabyle')),
+    ('kk', gettext_noop('Kazakh')),
+    ('km', gettext_noop('Khmer')),
+    ('kn', gettext_noop('Kannada')),
+    ('ko', gettext_noop('Korean')),
+    ('lb', gettext_noop('Luxembourgish')),
+    ('lt', gettext_noop('Lithuanian')),
+    ('lv', gettext_noop('Latvian')),
+    ('mk', gettext_noop('Macedonian')),
+    ('ml', gettext_noop('Malayalam')),
+    ('mn', gettext_noop('Mongolian')),
+    ('mr', gettext_noop('Marathi')),
+    ('my', gettext_noop('Burmese')),
+    ('nb', gettext_noop('Norwegian Bokmål')),
+    ('ne', gettext_noop('Nepali')),
+    ('nl', gettext_noop('Dutch')),
+    ('nn', gettext_noop('Norwegian Nynorsk')),
+    ('os', gettext_noop('Ossetic')),
+    ('pa', gettext_noop('Punjabi')),
+    ('pl', gettext_noop('Polish')),
+    ('pt', gettext_noop('Portuguese')),
+    ('pt-br', gettext_noop('Brazilian Portuguese')),
+    ('ro', gettext_noop('Romanian')),
+    ('ru', gettext_noop('Russian')),
+    ('sk', gettext_noop('Slovak')),
+    ('sl', gettext_noop('Slovenian')),
+    ('sq', gettext_noop('Albanian')),
+    ('sr', gettext_noop('Serbian')),
+    ('sr-latn', gettext_noop('Serbian Latin')),
+    ('sv', gettext_noop('Swedish')),
+    ('sw', gettext_noop('Swahili')),
+    ('ta', gettext_noop('Tamil')),
+    ('te', gettext_noop('Telugu')),
+    ('th', gettext_noop('Thai')),
+    ('tr', gettext_noop('Turkish')),
+    ('tt', gettext_noop('Tatar')),
+    ('udm', gettext_noop('Udmurt')),
+    ('uk', gettext_noop('Ukrainian')),
+    ('ur', gettext_noop('Urdu')),
+    ('vi', gettext_noop('Vietnamese')),
+    ('zh-Hans', gettext_noop('Simplified Chinese')),
+    ('zh-hant', gettext_noop('Traditional Chinese')),
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
@@ -131,4 +231,16 @@ STATICFILES_DIRS = [
     ("bower", os.path.join(STATIC_ROOT,'bower_components')),
     ("plugin", os.path.join(STATIC_ROOT,'plugins'))
 ]
-
+# Default content type and charset to use for all HttpResponse objects, if a
+# MIME type isn't manually specified. These are used to construct the
+# Content-Type header.
+DEFAULT_CONTENT_TYPE = 'text/html'
+DEFAULT_CHARSET = 'utf-8'
+# Encoding of files read from disk (template and initial SQL files).
+FILE_CHARSET = 'utf-8'
+# Email address that error messages come from.
+SERVER_EMAIL = 'root@localhost'
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR,'locale'),
+    # os.path.join(BASE_DIR,'locale/zh-hans'),
+)

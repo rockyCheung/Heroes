@@ -9,7 +9,6 @@ import time
 # PyMongo. Make sure also to specify a database in the connection string:
 connect('mongodb://192.168.1.178:27017/cobra')
 
-
 # Now let's define some Models.
 class User(MongoModel):
     # Use 'email' as the '_id' field in MongoDB.
