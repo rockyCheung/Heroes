@@ -1,9 +1,12 @@
 #!/usr/bin/env python
+# -*- coding:utf-8 -*-
 import os
 import sys
 
 if __name__ == "__main__":
+    reload(sys)  # Python2.5 初始化后会删除 sys.setdefaultencoding 这个方法，我们需要重新载入
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "papa_office.settings")
+    sys.setdefaultencoding('utf-8')
     try:
         from django.core.management import execute_from_command_line
     except ImportError:

@@ -14,6 +14,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 from pymodm import connect
 import sys
+from papa_office.filters.LogFilter import LogFilter
 
 def gettext_noop(s):
     return s
@@ -39,7 +40,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Application definition
+# Application definition admin username:admin password:admin123
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -128,6 +129,12 @@ USE_TZ = True
 USE_THOUSAND_SEPARATOR = True
 
 # Languages we provide translations for, out of the box.
+# LANGUAGES = (
+#     # ('de', 'Deutsch'),
+#     ('en', 'English'),
+#     ('zh', '简体中文'),
+#     # ('zh-cn', '简体中文'),
+# )
 LANGUAGES = [
     ('af', gettext_noop('Afrikaans')),
     ('ar', gettext_noop('Arabic')),
@@ -244,3 +251,46 @@ LOCALE_PATHS = (
     os.path.join(BASE_DIR,'locale'),
     # os.path.join(BASE_DIR,'locale/zh-hans'),
 )
+DJANGO_LOG_LEVEL=DEBUG
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'filters': {
+    'skip_unreadable_posts': {
+        '()': 'django.utils.log.CallbackFilter',
+        'callback': LogFilter.skip_unreadable_post,
+    }
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': '/Users/zhangpenghong/Documents/workspace10/Heroes/debug.log',
+        },
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['skip_unreadable_posts'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file','console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'propagate': True,
+        },
+    },
+}
+# AUTH_USER_MODEL = 'papa_office.User'

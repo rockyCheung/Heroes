@@ -8,36 +8,35 @@ from papa_office.models.MongoModels import User,Keys
 from papa_office.conf.GlobleConfig import *
 from django.utils.translation import ugettext as _
 from django.http import HttpResponse
+import logging
+from papa_office.security.PaUser import *
+# from django.contrib.auth.decorators import login_required
+
 
 reload(sys)  # Python2.5 初始化后会删除 sys.setdefaultencoding 这个方法，我们需要重新载入
 sys.setdefaultencoding('utf-8')
+logger = logging.getLogger(name='view')
 
+# @login_required
+@check_user
 def hello(request):
     context = {}
     #test
     context['hello'] = _('msg.0003')
+    logger.info('say hello')
     return render(request, 'hello.html', context)
-    # return HttpResponse("Hello world ! ")
 
 def index(request):
     context = {}
     return render(request, 'login.html', context)
-def login(request):
-    email = ''
-    password = ''
-    if request.POST:
-        email = request.POST['email']
-        password = request.POST['password']
-    user = User.objects.get({'_id': email})
-    if user is None:
-        context = {'resultMsg':'user does not exist','resultCode':_('msg.0001')}
-        return render(request, 'login.html', context)
 
-    crpt = Pycrypt(key=COMMON_CONFIG['user_key'], salt=user.salt)
-    password = crpt.encrypt(password)
-    if password == user.password:
-        context ={'resultMsg':'login success','resultCode':'msg.0000','fname':user.fname,'email':user.email}
-        return render(request, 'index.html', context)
+@login_filter(login_before,login_after)
+def login(request):
+    userEmail = request.session.get('_auth_user_email', default=None)
+    userName = request.session.get('_auth_user_login_name', default=None)
+    context = {'resultMsg': 'login success', 'resultCode': _('msg.0000'), 'fname': userEmail, 'email': userName}
+    return render(request, 'index.html', context)
+
 
 def register(request):
     context = {}

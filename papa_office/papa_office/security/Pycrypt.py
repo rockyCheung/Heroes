@@ -18,6 +18,7 @@ class Pycrypt(object):
         count = len(text)
         add = length - (count % length)
         text = text + ('\0' * add)
+        # print text
         ciphertext = cryptor.encrypt(text)
         # 因为AES加密时候得到的字符串不一定是ascii字符集的，输出到终端或者保存时候可能存在问题
         # 所以这里统一把加密后的字符串转化为16进制字符串
@@ -29,9 +30,10 @@ class Pycrypt(object):
         cryptor = AES.new(self.key, self.mode, self.key)
         plainText = cryptor.decrypt(base64.decodestring(text))
         plainText = plainText.rstrip('\0')
+        # print plainText
         return plainText.partition('@')[0]
 
-# c = Pycrypt('1234567812345678','salt')
+# c = Pycrypt('a!sxzd12$oknde#s','a549e4a8-f1f1-11e7-ba31-9801a79f7d1b')
 # e = c.encrypt('123')
-# d = c.decrypt(e)
+# d = c.decrypt('OuYnhKPfIxUiuNyD68IY2GwGjxw+B9yTYjltFS4mFg9xfH5qGx9RQpFv3zL1cnsS')
 # print e,d

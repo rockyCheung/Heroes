@@ -4,6 +4,7 @@ from pymongo.operations import IndexModel
 from pymodm import connect, fields, MongoModel, EmbeddedMongoModel
 from papa_office.security.Pycrypt import Pycrypt
 from papa_office.security.UUIDTools import *
+from django.contrib.auth.base_user import AbstractBaseUser
 import time
 # Connect to MongoDB first. PyMODM supports all URI options supported by
 # PyMongo. Make sure also to specify a database in the connection string:

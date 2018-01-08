@@ -6,11 +6,9 @@
     {% get_current_language as LANGUAGE_CODE %}
  Current language: {{ LANGUAGE_CODE }}
     <meta charset="UTF-8">
-    <!--{% trans "user does not exist" as the_title %}-->
-    <title><h1>{% blocktrans %} {{hello}} {% endblocktrans %}</h1></title>
 </head>
 <body>
-<p>{% trans hello %}</p>
+<p>{% trans "hello" %}</p>
  <img src="{% static 'imag/user3-128x128.jpg' %}" alt="user image" class="offline">
 </body>
 </html>
