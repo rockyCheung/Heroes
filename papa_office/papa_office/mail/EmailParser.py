@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
 import email
-from papa_office.models.MongoModels import Emails
+from papa_office.models.MongoModels import Emails,UserEmailPreferences,User
+from papa_office.mail.ReceiveEmail import ReceiveEmail
 
 class EmailParser(object):
+
+    def __init__(self):
+        pass
 
     def parseEmailAndSave(self,mesgItems,userEmail):
         emailList = []
@@ -37,3 +41,27 @@ class EmailParser(object):
                 content = content.decode(chatset)
                 break
         return subject,efrom,content,chatset
+#多线程任务
+    def mailWorker(self,userEmail):
+        preferences = UserEmailPreferences.objects.get({'_id':userEmail,'enabled': True,'stype':0})
+        for p in  preferences:
+            # p.imap_server
+            # p.imap_port
+            # p.uname
+            # p.upassword
+            server = ReceiveEmail(host=p.imap_server, port=p.imap_port)
+            server.login(p.uname, p.upassword)
+            boxInfo = server.selectBox(boxName='INBOX')
+            # print boxInfo['EXISTS']
+            notDeleteList = server.searchNotDelete()
+            # print notDeleteList
+            mailInfo = server.fetchEmail(notDeleteList[0])
+            parser = EmailParser()
+            list = parser.parseEmailAndSave(mailInfo, userEmail)
+            # print list
+            server.logout()
+#定时执行
+    def dealAllUsersMail(self):
+        users = User.objects.get({'status':0})
+        for user in users:
+            self.mailWorker(user.email)
