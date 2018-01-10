@@ -26,5 +26,6 @@ urlpatterns = [
     url(r'^register', view.register),
     url(r'^rsubmit', view.registerSubmit),
     url(r'^myview', view.my_view),
+    url(r'^email-manager', view.my_view),
 ]
 #urlpatterns += staticfiles_urlpatterns()

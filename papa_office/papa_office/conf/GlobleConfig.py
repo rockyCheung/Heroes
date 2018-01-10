@@ -10,3 +10,4 @@ ROCKET_PROXY = {
               "https" : "https://127.0.0.1:3128",
             }
 ROCKET_SERVER_URL = 'http://chat.lianhehuishang.com'
+BROKER_URL = 'mongodb://192.168.1.178:27017/cobra'

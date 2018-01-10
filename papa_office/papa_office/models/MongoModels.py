@@ -4,7 +4,9 @@ from pymongo.operations import IndexModel
 from pymodm import connect, fields, MongoModel, EmbeddedMongoModel
 from papa_office.security.Pycrypt import Pycrypt
 from papa_office.security.UUIDTools import *
-from django.contrib.auth.base_user import AbstractBaseUser
+# from django.contrib.auth.base_user import AbstractBaseUser
+# from django.core.exceptions import ValidationError
+# from django.db.utils import IntegrityError
 import time
 # Connect to MongoDB first. PyMODM supports all URI options supported by
 # PyMongo. Make sure also to specify a database in the connection string:
@@ -58,6 +60,96 @@ class Comment(EmbeddedMongoModel):
     vote_score = fields.IntegerField(min_value=0)
 
 
+class EmailLog(MongoModel):
+    email = fields.EmailField(primary_key=True)
+    subject = fields.CharField(max_length=100,blank=True)  # max_length=100 to store just the beginning of the subject
+    date = fields.DateTimeField()
+    success = fields.BooleanField(default=True)
+    error = fields.CharField(max_length=255, blank=True)
+
+    def __unicode__(self):
+        return u'%s: %s' % (self.email, self.subject)
+
+    @staticmethod
+    def create_log(email, subject, success=True, error=None):
+        if error:
+            if success:
+                error = None  # to avoid inconsistent data caused by bad use of this method
+            else:
+                error = error[0:255]
+        return EmailLog.objects.create(email=email, subject=subject[0:100], success=success, error=error)
+
+class EmailStatistics(MongoModel):
+    date = fields.DateTimeField()
+    quantity = fields.IntegerField()
+
+    def __unicode__(self):
+        return u'%s' % self.date.strftime('%Y/%m/%d')
+
+class EmailTypeManager(MongoModel):
+    def all_types_that_users_can_disable(self):
+        return self.filter(can_be_disabled=True).order_by('name')
+
+class EmailType(MongoModel):
+    name = fields.CharField(max_length=100)
+    can_be_disabled = fields.BooleanField(default=True)
+
+    objects = EmailTypeManager()
+
+    def __unicode__(self):
+        return self.name
+
+    def save(self, **kwargs):
+        if not self.can_be_disabled:
+            UserEmailPreferences.objects.filter(email_type=self).delete()
+        super(EmailType, self).save(**kwargs)
+
+class UserEmailPreferences(MongoModel):
+    email = fields.EmailField(primary_key=True)
+    #0:IMAP 1:POP 2:Exchange
+    stype = fields.IntegerField(default=0)
+    imap_server = fields.CharField(blank=True)
+    imap_port = fields.IntegerField(blank=True)
+    pop_server = fields.CharField(blank=True)
+    pop_port = fields.IntegerField(blank=True)
+    receive_ssl = fields.BooleanField(default=True)
+    exchange_server = fields.CharField(blank=True)
+    uname = fields.CharField(blank=True)
+    upassword = fields.CharField(blank=True)
+    # email_type = fields.ForeignKey(EmailType)
+    enabled = fields.BooleanField(default=True)
+    smtp_server = fields.CharField(blank=True)
+    smtp_port = fields.IntegerField(blank=True)
+    send_ssl = fields.BooleanField(default=True)
+    # class Meta:
+    #     unique_together = ('user', 'email_type')
+    #
+    # def save(self, **kwargs):
+    #     if not self.enabled and not self.email_type.can_be_disabled:  # precaution to avoid inconsistent data
+    #         raise ValidationError('This type of e-mail can not be disabled.')
+    #     try:
+    #         super(UserEmailPreferences, self).save(**kwargs)
+    #     except IntegrityError:
+    #         raise ValidationError('This type of e-mail has already been disabled.')
+
+class EmailDatabase(MongoModel):
+    email = fields.EmailField(primary_key=True)
+
+def update_email_database(sender, instance, **kargs):
+    if instance.email:
+        EmailDatabase.objects.get_or_create(email=instance.email)
+
+class Emails(MongoModel):
+    userEmail = fields.EmailField(primary_key=True)
+    msgid = fields.IntegerField()
+    efrom = fields.EmailField()
+    eto = fields.EmailField(blank=True)
+    subject = fields.CharField(max_length=100,blank=True)  # max_length=100 to store just the beginning of the subject
+    internaldate = fields.DateTimeField()
+    content = fields.CharField()
+    charset = fields.CharField()
+    flags = fields.CharField()
+
 # Start the blog.
 # We need to save these objects before referencing them later.
 # today =  time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
@@ -94,3 +186,4 @@ class Comment(EmbeddedMongoModel):
 
 # u'Five Crazy Health Foods Jabba Eats.'
 # print(slideshow_titles.first().title)
+

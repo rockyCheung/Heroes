@@ -12,9 +12,13 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
-from pymodm import connect
-import sys
+import djcelery
 from papa_office.filters.LogFilter import LogFilter
+
+djcelery.setup_loader()
+BROKER_URL = 'mongodb://192.168.1.178:27017/cobra'
+EMAIL_MANAGER_TASK = 'email_task'
+EMAIL_MANAGER_USING_CELERY = False
 
 def gettext_noop(s):
     return s
@@ -49,6 +53,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'djcelery',
+    'papa_office',
 ]
 
 MIDDLEWARE = [
