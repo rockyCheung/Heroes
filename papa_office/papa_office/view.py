@@ -11,7 +11,7 @@ from django.http import HttpResponse
 import logging
 from papa_office.security.PaUser import *
 # from django.contrib.auth.decorators import login_required
-
+from papa_office.celery.Tasks import *
 
 reload(sys)  # Python2.5 初始化后会删除 sys.setdefaultencoding 这个方法，我们需要重新载入
 sys.setdefaultencoding('utf-8')
@@ -60,6 +60,12 @@ def registerSubmit(request):
 def my_view(request):
     output = _("Welcome to my site.")
     return HttpResponse(output)
+
+def receiveEmail(request):
+    mail_receive('zhangpenghong@pengpengw.com')
+    output = _("User email receive worker start.")
+    return HttpResponse(output)
+
 # keys = Keys.objects.raw({'status': 1,'sflag':0})
 #
 # for key in keys:

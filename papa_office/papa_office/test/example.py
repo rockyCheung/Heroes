@@ -6,23 +6,23 @@ from papa_office.imapclient import IMAPClient
 import email
 from papa_office.mail.ReceiveEmail import ReceiveEmail
 from papa_office.mail.EmailParser import EmailParser
-
-HOST = 'imap.exmail.qq.com'
-USERNAME = 'zhangpenghong@pengpengw.com'
-PASSWORD = 'Roc7758521'
-serverNew = ReceiveEmail(host=HOST,port=993)
-# server = IMAPClient(HOST,port=993)
-# server.login(USERNAME, PASSWORD)
-serverNew.login(USERNAME, PASSWORD)
-boxInfo = serverNew.selectBox(boxName='INBOX')
-print boxInfo['EXISTS']
-notDeleteList = serverNew.searchNotDelete()
-print notDeleteList
-mailInfo = serverNew.fetchEmail(notDeleteList[0])
-p = EmailParser()
-list = p.parseEmailAndSave(mailInfo,'zhangpenghong@pengpengw.com')
-print list
-serverNew.logout()
+from papa_office.celery.Tasks import *
+# HOST = 'imap.exmail.qq.com'
+# USERNAME = 'zhangpenghong@pengpengw.com'
+# PASSWORD = '*********'
+# serverNew = ReceiveEmail(host=HOST,port=993)
+# # server = IMAPClient(HOST,port=993)
+# # server.login(USERNAME, PASSWORD)
+# serverNew.login(USERNAME, PASSWORD)
+# boxInfo = serverNew.selectBox(boxName='INBOX')
+# print boxInfo['EXISTS']
+# notDeleteList = serverNew.searchNotDelete()
+# print notDeleteList
+# mailInfo = serverNew.fetchEmail(notDeleteList[0])
+# p = EmailParser()
+# list = p.parseEmailAndSave(mailInfo,'zhangpenghong@pengpengw.com')
+# print list
+# serverNew.logout()
 # print mailInfo[0]['INTERNALDATE'],mailInfo['FLAGS'],mailInfo['From']
 # select_info = server.select_folder('INBOX')
 # print('%d messages in INBOX' % select_info[b'EXISTS'])
@@ -71,3 +71,4 @@ serverNew.logout()
 #     #                                         data[b'INTERNALDATE'],'subject'))
 #
 # server.logout()
+# mail_receive('zhangpenghong@pengpengw.com')

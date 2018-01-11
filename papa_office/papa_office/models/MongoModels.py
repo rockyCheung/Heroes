@@ -140,7 +140,7 @@ def update_email_database(sender, instance, **kargs):
         EmailDatabase.objects.get_or_create(email=instance.email)
 
 class Emails(MongoModel):
-    userEmail = fields.EmailField(primary_key=True)
+    userEmail = fields.EmailField()
     msgid = fields.IntegerField()
     efrom = fields.EmailField()
     eto = fields.EmailField(blank=True)
@@ -149,6 +149,8 @@ class Emails(MongoModel):
     content = fields.CharField()
     charset = fields.CharField()
     flags = fields.CharField()
+
+
 
 # Start the blog.
 # We need to save these objects before referencing them later.

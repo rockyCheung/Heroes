@@ -2,12 +2,15 @@
 import email
 from papa_office.models.MongoModels import Emails,UserEmailPreferences,User
 from papa_office.mail.ReceiveEmail import ReceiveEmail
+import logging
 
+logger = logging.getLogger(name='EmailParser')
 class EmailParser(object):
 
     def __init__(self):
         pass
 
+    #解析邮件并保存到emails，如果相同用户下，msid、subject、efrom邮件已经存在，则不做处理
     def parseEmailAndSave(self,mesgItems,userEmail):
         emailList = []
         for msgid, data in mesgItems.items():
@@ -22,7 +25,12 @@ class EmailParser(object):
             emailDict['flags'] = data[b'FLAGS']
             emailDict['chatset'] = chatset
             emailList.append(emailDict)
-            Emails(userEmail,msgid,efrom,'',subject,data[b'INTERNALDATE'],content,chatset,data[b'FLAGS']).save()
+            mailCount = Emails.objects.raw({'userEmail':userEmail,'msgid':msgid,'efrom':efrom,'subject':subject}).count()
+            logger.info('user: %s msgid: %s efrom: %s subject: %s is already exist',userEmail,msgid,efrom,subject)
+            if mailCount is None or mailCount == 0:
+                Emails(userEmail,msgid,efrom,'',subject,data[b'INTERNALDATE'],content,chatset,data[b'FLAGS']).save()
+            else:
+                pass
         return emailList
 
     def parseEmailDetail(self,paser):
@@ -41,26 +49,25 @@ class EmailParser(object):
                 content = content.decode(chatset)
                 break
         return subject,efrom,content,chatset
-#多线程任务
+
+    #多线程任务
     def mailWorker(self,userEmail):
-        preferences = UserEmailPreferences.objects.get({'_id':userEmail,'enabled': True,'stype':0})
-        for p in  preferences:
-            # p.imap_server
-            # p.imap_port
-            # p.uname
-            # p.upassword
-            server = ReceiveEmail(host=p.imap_server, port=p.imap_port)
-            server.login(p.uname, p.upassword)
-            boxInfo = server.selectBox(boxName='INBOX')
-            # print boxInfo['EXISTS']
-            notDeleteList = server.searchNotDelete()
-            # print notDeleteList
-            mailInfo = server.fetchEmail(notDeleteList[0])
-            parser = EmailParser()
-            list = parser.parseEmailAndSave(mailInfo, userEmail)
-            # print list
-            server.logout()
-#定时执行
+        pre = UserEmailPreferences.objects.get({'_id':userEmail,'enabled': True,'stype':0})
+        server = ReceiveEmail(host=pre.imap_server, port=pre.imap_port)
+        server.login(pre.uname, pre.upassword)
+        boxInfo = server.selectBox(boxName='INBOX')
+        logger.info('inbox: %s ',boxInfo['EXISTS'])
+        notDeleteList = server.searchNotDelete()
+        logger.info('the not delete email list: %s ', notDeleteList)
+        mailInfo = server.fetchEmail(notDeleteList[0])
+        parser = EmailParser()
+        list = parser.parseEmailAndSave(mailInfo, userEmail)
+        print '#######################################################'
+        print list
+        print '#######################################################'
+        server.logout()
+
+    #定时执行
     def dealAllUsersMail(self):
         users = User.objects.get({'status':0})
         for user in users:
