@@ -62,7 +62,7 @@ def my_view(request):
     return HttpResponse(output)
 
 def receiveEmail(request):
-    mail_receive('zhangpenghong@pengpengw.com')
+    mail_receive.delay('zhangpenghong@pengpengw.com')
     output = _("User email receive worker start.")
     return HttpResponse(output)
 

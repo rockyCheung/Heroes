@@ -33,6 +33,11 @@ def mail_receive(userEmail):
     emailParser = EmailParser()
     emailParser.mailWorker(userEmail)
 
+@task(queue=settings.EMAIL_MANAGER_TASK if hasattr(settings, 'EMAIL_MANAGER_TASK') else None)
+def mail_batch_receive():
+    emailParser = EmailParser()
+    emailParser.dealAllUsersMail()
+
 @task
 def add(x, y):
     return x + y

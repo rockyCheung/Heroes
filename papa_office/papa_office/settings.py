@@ -14,12 +14,16 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 import djcelery
 from papa_office.filters.LogFilter import LogFilter
+#定时任务可使用django_crontab实现，也可使用celery.schedules实现,我们这里采用celery.schedules
+# from django_crontab.crontab import Crontab
+
 
 djcelery.setup_loader()
 BROKER_URL = 'mongodb://192.168.1.178:27017/cobra'
 EMAIL_MANAGER_TASK = 'email_task'
 EMAIL_MANAGER_USING_CELERY = False
-
+#若启用eager模式, add.delay(2, 2)\add(2, 2)相同
+CELERY_ALWAYS_EAGER = True
 def gettext_noop(s):
     return s
 
@@ -55,6 +59,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'djcelery',
     'papa_office',
+    # 'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -299,4 +304,12 @@ LOGGING = {
         },
     },
 }
-# AUTH_USER_MODEL = 'papa_office.User'
+# AUTH_USER_MODEL = 'papa_office.User' 启动定时任务： python manage.py celery worker --loglevel=info --beat
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+# CELERYBEAT_SCHEDULE = {
+#     'timing': {
+#         'task': 'papa_office.celery.Tasks.mail_batch_receive',
+#         'schedule': Crontab(minute=u'5')
+#         # 'args': (2, 3)
+#     },
+# }
