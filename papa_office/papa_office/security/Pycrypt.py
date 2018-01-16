@@ -33,7 +33,7 @@ class Pycrypt(object):
         # print plainText
         return plainText.partition('@')[0]
 
-# c = Pycrypt('a!sxzd12$oknde#s','a549e4a8-f1f1-11e7-ba31-9801a79f7d1b')
-# e = c.encrypt('123')
-# d = c.decrypt('OuYnhKPfIxUiuNyD68IY2GwGjxw+B9yTYjltFS4mFg9xfH5qGx9RQpFv3zL1cnsS')
-# print e,d
+c = Pycrypt('a!sxzd12$oknde#s','a549e4a8-f1f1-11e7-ba31-9801a79f7d1b')
+e = c.encrypt('123')
+d = c.decrypt('OuYnhKPfIxUiuNyD68IY2GwGjxw+B9yTYjltFS4mFg9xfH5qGx9RQpFv3zL1cnsS')
+print e,d
