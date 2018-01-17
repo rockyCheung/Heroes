@@ -1,0 +1,16 @@
+BTrees>=4.4.1
+Babel>=2.5.1
+DBQuery>=0.4.1
+Django==1.11.7
+PyHDFS==0.2.1
+celery==3.1.25
+crypto==1.4.1
+cryptography==1.9
+django-appconf==1.0.2
+django-celery==3.2.3
+django-celery-email==2.0.0
+django-crontab==0.7.1
+six==1.10.0
+pymongo>=3.5.1
+pyspark>=2.2.0
+numpy==1.12.0
