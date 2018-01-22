@@ -14,3 +14,4 @@ six==1.10.0
 pymongo>=3.5.1
 pyspark>=2.2.0
 numpy==1.12.0
+djangorestframework==3.7.7

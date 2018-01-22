@@ -12,6 +12,7 @@ import logging
 from papa_office.security.PaUser import *
 # from django.contrib.auth.decorators import login_required
 from papa_office.celery.Tasks import *
+from papa_office.models.ESModels import M
 
 reload(sys)  # Python2.5 初始化后会删除 sys.setdefaultencoding 这个方法，我们需要重新载入
 sys.setdefaultencoding('utf-8')
@@ -27,6 +28,9 @@ def hello(request):
     return render(request, 'hello.html', context)
 
 def index(request):
+    # M(1,'aaa','dddd','vvv').save()
+    q = M.es.all()#search('3308211963',facets=['IDcard'])
+    print q
     context = {}
     return render(request, 'login.html', context)
 

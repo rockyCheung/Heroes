@@ -313,3 +313,13 @@ CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 #         # 'args': (2, 3)
 #     },
 # }
+
+REST_FRAMEWORK = {}
+ELASTICSEARCH_URL = 'http://192.168.1.171:9200'
+#ELASTICSEARCH_HTTP_URL = 'http://192.168.1.171:9100'
+ELASTICSEARCH_AUTO_INDEX = False
+ELASTICSEARCH_SETTINGS = {
+    # better tests performance
+    "number_of_shards": 1,
+    "index.store.type": "memory",
+}

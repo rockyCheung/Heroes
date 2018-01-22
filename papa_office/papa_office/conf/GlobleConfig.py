@@ -11,3 +11,4 @@ ROCKET_PROXY = {
             }
 ROCKET_SERVER_URL = 'http://chat.lianhehuishang.com'
 BROKER_URL = 'mongodb://192.168.1.178:27017/cobra'
+ELASTICSEARCH_URL = 'http://192.168.1.171:9200'
