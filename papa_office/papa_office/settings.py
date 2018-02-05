@@ -247,7 +247,8 @@ STATICFILES_DIRS = [
     ("js", os.path.join(STATIC_ROOT,'web/js')),
     ("img", os.path.join(STATIC_ROOT,'web/img')),
     ("bower", os.path.join(STATIC_ROOT,'bower_components')),
-    ("plugin", os.path.join(STATIC_ROOT,'plugins'))
+    ("plugin", os.path.join(STATIC_ROOT,'plugins')),
+    ("charts", os.path.join(STATIC_ROOT,'echarts'))
 ]
 # Default content type and charset to use for all HttpResponse objects, if a
 # MIME type isn't manually specified. These are used to construct the

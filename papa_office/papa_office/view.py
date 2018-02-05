@@ -66,6 +66,29 @@ def receiveEmail(request):
     output = _("User email receive worker start.")
     return HttpResponse(output)
 
+def echartsExample(request):
+    context = {}
+    return render(request, 'examples/echarts.html', context)
+
+def chartjs(request):
+    context = {}
+    return render(request, 'charts/chartjs.html', context)
+
+def morris(request):
+    context = {}
+    return render(request, 'charts/morris.html', context)
+
+def morris(request):
+    context = {}
+    return render(request, 'charts/morris.html', context)
+
+def flot(request):
+    context = {}
+    return render(request, 'charts/flot.html', context)
+
+def inline(request):
+    context = {}
+    return render(request, 'charts/inline.html', context)
 # keys = Keys.objects.raw({'status': 1,'sflag':0})
 #
 # for key in keys:

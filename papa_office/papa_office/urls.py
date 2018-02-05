@@ -28,5 +28,10 @@ urlpatterns = [
     url(r'^myview', view.my_view),
     url(r'^email-manager', view.my_view),
     url(r'^remail', view.receiveEmail),
+    url(r'^echartsExample',view.echartsExample),
+    url(r'^chartjs',view.chartjs),
+    url(r'^morris',view.morris),
+    url(r'^flot',view.flot),
+    url(r'^inline',view.inline),
 ]
 #urlpatterns += staticfiles_urlpatterns()
