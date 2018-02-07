@@ -33,5 +33,6 @@ urlpatterns = [
     url(r'^morris',view.morris),
     url(r'^flot',view.flot),
     url(r'^inline',view.inline),
+    url(r'^wordCloud',view.wordCloud),
 ]
 #urlpatterns += staticfiles_urlpatterns()

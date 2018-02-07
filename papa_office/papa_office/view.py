@@ -89,6 +89,10 @@ def flot(request):
 def inline(request):
     context = {}
     return render(request, 'charts/inline.html', context)
+
+def wordCloud(request):
+    context = {}
+    return render(request, 'examples/echarts/wordCloud.html', context)
 # keys = Keys.objects.raw({'status': 1,'sflag':0})
 #
 # for key in keys:
