@@ -1,5 +1,5 @@
 # Heroes
-采用轻量级web框架flask构建restfull～
+使用python的Flask实现一个RESTful API服务器端～
 
 ### 查询
 
