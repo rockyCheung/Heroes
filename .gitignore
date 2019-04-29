@@ -2,13 +2,14 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+.pytest_cache
 # C extensions
 *.so
+pursue.sqlite
 
 # Distribution / packaging
 .Python
-env/
+#env/
 build/
 develop-eggs/
 dist/
@@ -52,7 +53,7 @@ coverage.xml
 
 # Django stuff:
 *.log
-local_settings.py
+#local_settings.py
 
 # Flask stuff:
 instance/
@@ -80,12 +81,12 @@ celerybeat-schedule
 *.sage.py
 
 # dotenv
-.env
+#.env
 
 # virtualenv
 .venv
 venv/
-ENV/
+#ENV/
 
 # Spyder project settings
 .spyderproject
@@ -102,5 +103,8 @@ ENV/
 # idea
 .idea
 #writePoint.parquet
-robra.log.*
-robra.log
+echeck.log*
+#config
+conf.*
+conf.yml
+echeck.htm

@@ -1,0 +1,8 @@
+flask>=1.0.2
+Click>=7.0
+Flask-SQLAlchemy>=2.4.0
+Jinja2>=2.10.1
+MarkupSafe>=1.1.1
+SQLAlchemy>=1.3.3
+Werkzeug>=0.15.2
+pytest>=4.4.1

@@ -1,0 +1,6 @@
+include LICENSE
+include pursue/schema.sql
+graft pursue/static
+graft pursue/templates
+graft tests
+global-exclude *.pyc
