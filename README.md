@@ -1,5 +1,5 @@
 # Heroes
-这是一个使用python语言集成django框架web工程～
+采用轻量级web框架flask构建restfull～
 
 ### 查询
 
