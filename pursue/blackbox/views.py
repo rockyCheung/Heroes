@@ -113,10 +113,9 @@ def update(id):
 @bp.route("/<int:id>", methods=["DELETE"])
 @login_required
 def delete(id):
-    """Delete a post.
+    """Delete a accountbox.
 
-    Ensures that the post exists and that the logged in user is the
-    author of the post.
+    Ensures that the accountbox exists.
     """
     accountbox = get_accountbox(id)
     db.session.delete(accountbox)

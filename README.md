@@ -23,6 +23,14 @@ curl -u rocky:123 -i -H "Content-Type: application/json" -X POST -d '{"account":
 ```bash
 curl -u rocky:123 -i -H "Content-Type: application/json" -X PUT -d '{"account":"888888","password":"pass123456","siteurl":"http://www.qq.com","decription":"qq account111"}' http://127.0.0.1:5000/api/v1.0/blackbox/1
 ```
+
+### 删除记录
+
+```bash
+curl -u rocky:123 -i -H "Content-Type: application/json" -X DELETE http://127.0.0.1:5000/api/v1.0/blackbox/1
+```
+
+
 ## 附录
 
 ### curl用法
