@@ -11,5 +11,5 @@ bpp = Blueprint("location_for_page", __name__ ,url_prefix="/location")
 @bpp.route("/query", methods=["GET"])
 @login_required
 def query():
-    location = Location.query.filter(Location.user_id==g.user.id).all()
+    location = Location.query.order_by(Location.created.asc()).filter(Location.user_id==g.user.id).all()
     return render_template("location/index.html", locations=location)

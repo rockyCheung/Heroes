@@ -32,6 +32,12 @@
 	var map = new BMap.Map("allmap");
 	map.centerAndZoom(new BMap.Point(116.404, 39.915), 15);
 	map.enableScrollWheelZoom();
+var sy = new BMap.Symbol(BMap_Symbol_SHAPE_BACKWARD_OPEN_ARROW, {
+    scale: 0.6,//图标缩放大小
+    strokeColor:'#fff',//设置矢量图标的线填充颜色
+    strokeWeight: '2',//设置线宽
+});
+var icons = new BMap.IconSequence(sy, '10', '30');
 
 var bmappoints = []
   {% for location in locations %}
@@ -39,7 +45,14 @@ var bmappoints = []
     {% if not loop.last %}
     {% endif %}
   {% endfor %}
-	var polyline = new BMap.Polyline(bmappoints, {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.5});   //创建折线
+	var polyline = new BMap.Polyline(bmappoints, {
+        enableEditing: false,//是否启用线编辑，默认为false
+        enableClicking: true,//是否响应点击事件，默认为true
+        icons:[icons],
+        strokeWeight:'8',//折线的宽度，以像素为单位
+        strokeOpacity: 0.8,//折线的透明度，取值范围0 - 1
+        strokeColor:"#18a45b" //折线颜色
+    });   //创建折线
 	map.addOverlay(polyline);   //增加折线
 </script>
 {% endblock %}
