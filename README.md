@@ -57,7 +57,7 @@ $ ./start.sh
 |查询|get|http://127.0.0.1:5000/api/v1.0/blackbox/<string:decription>|
 |插入|post|http://127.0.0.1:5000/api/v1.0/blackbox|
 |更新|put|http://127.0.0.1:5000/api/v1.0/blackbox|
-|删除|delete|http://127.0.0.1:5000/api/v1.0/blackbox<int:id>|
+|删除|delete|http://127.0.0.1:5000/api/v1.0/blackbox/<int:id>|
 
 #### 查询
 
