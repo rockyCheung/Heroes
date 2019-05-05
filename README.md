@@ -41,6 +41,7 @@ $ ./start.sh
 
 ### 账号信息管理API
 提供用户通过API接口增加、修改、删除、查询任意平台账号、密码信息，例如QQ、微信账号及密码
+* 表结构
 
 |接口字段|含义|
 |:---|:---:|
@@ -48,6 +49,15 @@ $ ./start.sh
 |password|密码|
 |siteurl|网址|
 |decription|描述信息|
+
+* 接口说明
+
+|接口|method|URL|
+|:---|:---:|:---:|
+|查询|get|http://127.0.0.1:5000/api/v1.0/blackbox/<string:decription>|
+|插入|post|http://127.0.0.1:5000/api/v1.0/blackbox|
+|更新|put|http://127.0.0.1:5000/api/v1.0/blackbox|
+|删除|delete|http://127.0.0.1:5000/api/v1.0/blackbox|
 
 #### 查询
 
