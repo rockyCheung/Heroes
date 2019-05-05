@@ -11,10 +11,10 @@ from pursue import db
 from pursue.user.views import login_required
 from pursue.blog.models import Post
 
-bp = Blueprint("blog", __name__)
+bpp = Blueprint("blog", __name__)
 
 
-@bp.route("/")
+@bpp.route("/")
 def index():
     """Show all the posts, most recent first."""
     posts = Post.query.order_by(Post.created.desc()).all()
@@ -41,7 +41,7 @@ def get_post(id, check_author=True):
     return post
 
 
-@bp.route("/create", methods=("GET", "POST"))
+@bpp.route("/create", methods=("GET", "POST"))
 @login_required
 def create():
     """Create a new post for the current user."""
@@ -63,7 +63,7 @@ def create():
     return render_template("blog/create.html")
 
 
-@bp.route("/<int:id>/update", methods=("GET", "POST"))
+@bpp.route("/<int:id>/update", methods=("GET", "POST"))
 @login_required
 def update(id):
     """Update a post if the current user is the author."""
@@ -88,7 +88,7 @@ def update(id):
     return render_template("blog/update.html", post=post)
 
 
-@bp.route("/<int:id>/delete", methods=("POST",))
+@bpp.route("/<int:id>/delete", methods=("POST",))
 @login_required
 def delete(id):
     """Delete a post.

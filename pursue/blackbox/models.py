@@ -13,3 +13,4 @@ class Accountbox(db.Model):
     password = db.Column(db.String, nullable=False)
     siteurl = db.Column(db.String, nullable=True)
     decription = db.Column(db.String, nullable=True)
+    user = db.relationship(User, lazy="joined", backref="accountboxs")

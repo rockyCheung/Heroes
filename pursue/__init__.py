@@ -43,11 +43,13 @@ def create_app(test_config=None):
     app.cli.add_command(init_db_command)
 
     # apply the blueprints to the app
-    from pursue import user, blog, blackbox
-
-    app.register_blueprint(user.bp)
-    app.register_blueprint(blog.bp)
+    from pursue import user, blog, blackbox, location
+    #rest api views define to bp,page for bp
+    app.register_blueprint(user.bpp)
+    app.register_blueprint(blog.bpp)
     app.register_blueprint(blackbox.bp)
+    app.register_blueprint(location.bp)
+    app.register_blueprint(location.bpp)
 
     # make "index" point at "/", which is handled by "blog.index"
     app.add_url_rule("/", endpoint="index")

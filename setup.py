@@ -2,7 +2,7 @@ import io
 
 from setuptools import find_packages, setup
 
-with io.open('README.md', 'md', encoding='utf8') as f:
+with io.open('README.md', 'r', encoding='utf8') as f:
     readme = f.read()
 
 setup(
@@ -12,6 +12,7 @@ setup(
     license='BSD',
     maintainer='Pallets team',
     maintainer_email='bigroc_ren@hotmail.com',
+    long_description_content_type="text/markdown",
     description='pursue.',
     long_description=readme,
     packages=find_packages(),

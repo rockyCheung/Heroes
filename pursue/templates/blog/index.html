@@ -1,13 +1,20 @@
 {% extends 'base.html' %}
-
+{% block title %} Posts {% endblock %}
 {% block header %}
-  <h1>{% block title %}Posts{% endblock %}</h1>
+  <ul>
+  <li>Posts</li>
   {% if g.user %}
     <a class="action" href="{{ url_for('blog.create') }}">New</a>
   {% endif %}
+<li>Locations</li>
+  {% if g.user %}
+    <a class="action" href="{{ url_for('location_for_page.query') }}">Query</a>
+  {% endif %}
+</ul>
 {% endblock %}
 
 {% block content %}
+
   {% for post in posts %}
     <article class="post">
       <header>

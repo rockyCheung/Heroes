@@ -1,34 +1,98 @@
 # Heroes
-使用python的Flask实现一个RESTful API服务器端～
+Heroes是一个python练习项目，采用Flask、SQLAlchemy、Werkzeug实现一个简单的RESTful API服务器端～
 
-### 查询
+* 采用嵌入式数据库SQLite
+* 接口设计采用Restful模式
+* 采用轻量级ORM框架Flask-SQLAlchemy
+* 轻量级模版引擎Jinja2
+
+## 环境搭建
+
+* 拉取代码到本地
+```bash
+$ git clone https://github.com/rockyCheung/Heroes.git
+```
+* 初始化
+```bash
+$ cd Heroes
+$ ./init_db.sh
+```
+执行init_db.sh脚本会在Heroes目录下生成instance/pursue.sqlite数据库文件
+
+* 启动程序
+```bash
+$ ./start.sh
+```
+执行脚本后，输出如下信息，则说明服务已经正常启动～
+```
+ * Serving Flask app "pursue" 
+ * Environment: development
+ * Debug mode: on
+ * Running on http://127.0.0.1:5000/
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: ***-***-***
+```
+## API测试
+
+### 账号注册
+
+服务正常启动后，打开http://127.0.0.1:5000，将显示登录页面，如未创建账号，可以点击Register进行账号注册，注册完成后即可使用账号访问API接口
+
+### 账号信息管理API
+提供用户通过API接口增加、修改、删除、查询任意平台账号、密码信息，例如QQ、微信账号及密码
+
+#### 查询
 
 * 查询符合描述信息的记录
 ```bash
-curl -u rocky:123 -i http://127.0.0.1:5000/api/v1.0/blackbox/qq 
+$ curl -u rocky:123 -i http://127.0.0.1:5000/api/v1.0/blackbox/qq 
 ```
 
 * 查询所有记录
 ```bash
-curl -u rocky:123 -i http://127.0.0.1:5000/api/v1.0/blackbox/
+$ curl -u rocky:123 -i http://127.0.0.1:5000/api/v1.0/blackbox/
 ```
-### 插入记录
+#### 插入记录
 
 * 添加一条记录
 ```bash
-curl -u rocky:123 -i -H "Content-Type: application/json" -X POST -d '{"account":"888888","password":"pass123456","siteurl":"http://www.qq.com","decription":"qq account"}' http://127.0.0.1:5000/api/v1.0/blackbox/
+$ curl -u rocky:123 -i -H "Content-Type: application/json" -X POST -d '{"account":"888888","password":"pass123456","siteurl":"http://www.qq.com","decription":"qq account"}' http://127.0.0.1:5000/api/v1.0/blackbox/
 ```
-### 更新记录
+#### 更新记录
 
 ```bash
-curl -u rocky:123 -i -H "Content-Type: application/json" -X PUT -d '{"account":"888888","password":"pass123456","siteurl":"http://www.qq.com","decription":"qq account111"}' http://127.0.0.1:5000/api/v1.0/blackbox/1
+$ curl -u rocky:123 -i -H "Content-Type: application/json" -X PUT -d '{"account":"888888","password":"pass123456","siteurl":"http://www.qq.com","decription":"qq account111"}' http://127.0.0.1:5000/api/v1.0/blackbox/1
 ```
 
-### 删除记录
+#### 删除记录
 
 ```bash
-curl -u rocky:123 -i -H "Content-Type: application/json" -X DELETE http://127.0.0.1:5000/api/v1.0/blackbox/1
+$ curl -u rocky:123 -i -H "Content-Type: application/json" -X DELETE http://127.0.0.1:5000/api/v1.0/blackbox/1
 ```
+### 位置信息管理API
+
+#### 添加位置信息
+
+```bash
+$ curl -u rocky:123 -i -H "Content-Type: application/json" -X POST -d '{"coordinate":"123,124","altitude":"300","speed":"5","course":"50"}' http://127.0.0.1:5000/api/v1.0/location/
+```
+#### 查询位置信息
+
+```bash
+$ curl -u rocky:123 -i http://127.0.0.1:5000/api/v1.0/location/
+```
+#### 查询指定起始日期位置信息
+```bash
+$ curl -u rocky:123 -i http://127.0.0.1:5000/api/v1.0/location/2019-05-06
+```
+#### 查询指定日期区间位置信息
+```bash
+$ curl -u rocky:123 -i http://127.0.0.1:5000/api/v1.0/location/2019-05-04/2019-05-08
+```
+
+
+* 查询用户所有位置信息
 
 
 ## 附录

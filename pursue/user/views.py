@@ -15,7 +15,7 @@ from werkzeug.datastructures import Authorization
 import logging
 import base64
 
-bp = Blueprint("user", __name__, url_prefix="/user")
+bpp = Blueprint("user", __name__, url_prefix="/user")
 
 
 def get_auth():
@@ -52,7 +52,7 @@ def login_required(view):
     return wrapped_view
 
 
-@bp.before_app_request
+@bpp.before_app_request
 def load_logged_in_user():
     """If a user id is stored in the session, load the user object from
     the database into ``g.user``."""
@@ -60,7 +60,7 @@ def load_logged_in_user():
     g.user = User.query.get(user_id) if user_id is not None else None
 
 
-@bp.route("/register", methods=("GET", "POST"))
+@bpp.route("/register", methods=("GET", "POST"))
 def register():
     """Register a new user.
 
@@ -94,7 +94,7 @@ def register():
     return render_template("user/register.html")
 
 
-@bp.route("/login", methods=("GET", "POST"))
+@bpp.route("/login", methods=("GET", "POST"))
 def login():
     """Log in a registered user by adding the user id to the session."""
     if request.method == "POST":
@@ -124,7 +124,7 @@ def login_check(username,password):
 
     return error
 
-@bp.route("/logout")
+@bpp.route("/logout")
 def logout():
     """Clear the current session, including the stored user id."""
     session.clear()
