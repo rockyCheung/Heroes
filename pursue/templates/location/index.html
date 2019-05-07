@@ -9,17 +9,14 @@
 		#control{width:100%;}
 	</style>
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=P5aG2IYp8mvmNWaQGZVK3C2fPuGccopV"></script>
-
+{% if g.user %}
   <ul>
   <li>Posts</li>
-  {% if g.user %}
-    <a class="action" href="{{ url_for('blog.create') }}">New</a>
-  {% endif %}
+    <a class="action" href="{{ url_for('blog.index') }}">Blog</a>
 <li>Locations</li>
-  {% if g.user %}
     <a class="action" href="{{ url_for('location_for_page.query') }}">Query</a>
-  {% endif %}
 </ul>
+  {% endif %}
 {% endblock %}
 
 {% block content %}

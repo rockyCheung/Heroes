@@ -1,26 +1,40 @@
+import gatt
 
-import os
-import pyaes
-import base64
-key = "This_key_for_demo_purposes_only!"
+from argparse import ArgumentParser
 
-s = os.urandom(32)
-# print(str(s))
-# base64code = base64.encodebytes(s)
-# print(base64code)
-# print(base64.decodebytes(base64code))
-# 
-# b=b'\xed6j\xd7_\xbd^\xbf9\xf9\xda\x8aY=\xd8+0\xe7\xb2\xdb4n\xa0\xe9\xf1\xd1\xb1\x8d\xc4c\xf0\xc7'
-# string=str(b,'utf-8')
-# print(string)
-# aes = pyaes.AESModeOfOperationCTR(s)
 
-aes = pyaes.AESModeOfOperationCTR(s)
-plaintext = "Text may be any length you wish, no padding is required"
-ciphertext = aes.encrypt(plaintext)
+class AnyDevice(gatt.Device):
+    def connect_succeeded(self):
+        super().connect_succeeded()
+        print("[%s] Connected" % (self.mac_address))
 
-name  = 'rocky'
-by = name.encode('utf-8')
-print(ciphertext)
-aa = aes.encrypt(name)
-print(aes.decrypt(ciphertext))
+    def connect_failed(self, error):
+        super().connect_failed(error)
+        print("[%s] Connection failed: %s" % (self.mac_address, str(error)))
+
+    def disconnect_succeeded(self):
+        super().disconnect_succeeded()
+        print("[%s] Disconnected" % (self.mac_address))
+
+    def services_resolved(self):
+        super().services_resolved()
+
+        print("[%s] Resolved services" % (self.mac_address))
+        for service in self.services:
+            print("[%s]  Service [%s]" % (self.mac_address, service.uuid))
+            for characteristic in service.characteristics:
+                print("[%s]    Characteristic [%s]" % (self.mac_address, characteristic.uuid))
+
+
+arg_parser = ArgumentParser(description="GATT Connect Demo")
+arg_parser.add_argument('4a:00:06:95:9c:70', help="MAC address of device to connect")
+args = arg_parser.parse_args()
+
+print("Connecting...")
+
+manager = gatt.DeviceManager(adapter_name='hci0')
+
+device = AnyDevice(manager=manager, mac_address=args.mac_address)
+device.connect()
+
+manager.run()
