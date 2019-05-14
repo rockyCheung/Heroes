@@ -89,12 +89,33 @@ $ curl -u rocky:123 -i -H "Content-Type: application/json" -X DELETE http://127.
 ```
 ### 位置信息管理API
 
+提供位置信息推送、查询等API接口
+
+* 表结构
+
+|接口字段|含义|
+|:---|:---:|
+|coordinate|经纬度，经度和纬度采用逗号分割|
+|altitude|海拔信息，单位是米|
+|speed|当前速度，单位m/h|
+|course|航向(设备的移动方向,值域范围0.0~359.9,正北方向为0.0)|
+
+* 接口说明
+
+|接口|method|URL|
+|:---|:---:|:---:|
+|插入|post|http://127.0.0.1:5000/api/v1.0/location/|
+|查询|get|http://127.0.0.1:5000/api/v1.0/location|
+|指定起始日期查询|get|http://127.0.0.1:5000/api/v1.0/location/<yyyy-MM-dd>|
+|指定日期区间查询|get|http://127.0.0.1:5000/api/v1.0/location/<start yyyy-MM-dd>/<end yyyy-MM-dd>|
+
+
 #### 添加位置信息
 
 ```bash
 $ curl -u rocky:123 -i -H "Content-Type: application/json" -X POST -d '{"coordinate":"123,124","altitude":"300","speed":"5","course":"50"}' http://127.0.0.1:5000/api/v1.0/location/
 ```
-#### 查询位置信息
+#### 查询用户所有位置信息
 
 ```bash
 $ curl -u rocky:123 -i http://127.0.0.1:5000/api/v1.0/location/
@@ -107,10 +128,6 @@ $ curl -u rocky:123 -i http://127.0.0.1:5000/api/v1.0/location/2019-05-06
 ```bash
 $ curl -u rocky:123 -i http://127.0.0.1:5000/api/v1.0/location/2019-05-04/2019-05-08
 ```
-
-
-* 查询用户所有位置信息
-
 
 ## 附录
 
