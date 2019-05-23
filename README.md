@@ -15,9 +15,14 @@ $ git clone https://github.com/rockyCheung/Heroes.git
 * 初始化
 ```bash
 $ cd Heroes
-$ ./init_db.sh
+$ ./clear_data_and_creat_tables.sh
 ```
 执行init_db.sh脚本会在Heroes目录下生成instance/pursue.sqlite数据库文件
+
+* 更新数据库变更
+```
+$ ./db_upgrade.sh
+```
 
 * 启动程序
 ```bash

@@ -6,3 +6,6 @@ MarkupSafe>=1.1.1
 SQLAlchemy>=1.3.3
 Werkzeug>=0.15.2
 pytest>=4.4.1
+Flask-Migrate
+Flask-Script
+python-dotenv>=0.10.2

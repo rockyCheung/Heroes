@@ -2,19 +2,37 @@ import os
 
 import click
 from flask import Flask
+from flask import request
 from flask.cli import with_appcontext
+from flask.logging import default_handler
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 import logging
 
 __version__ = (1, 0, 0, "dev")
+
+
 logging.basicConfig(filename='pursue.log',level=logging.DEBUG)
 db = SQLAlchemy()
 
+class RequestFormatter(logging.Formatter):
+    def format(self, record):
+        record.url = request.url
+        record.remote_addr = request.remote_addr
+        return super().format(record)
+
+formatter = RequestFormatter(
+    '[%(asctime)s] %(remote_addr)s requested %(url)s\n'
+    '%(levelname)s in %(module)s: %(message)s'
+)
+default_handler.setFormatter(formatter)
 
 def create_app(test_config=None):
     """Create and configure an instance of the Flask application."""
     app = Flask(__name__, instance_relative_config=True)
+    app.logger.removeHandler(default_handler)
 
+    migrate = Migrate(app, db)
     # some deploy systems set the database url in the environ
     db_url = os.environ.get("DATABASE_URL")
 
@@ -56,7 +74,7 @@ def create_app(test_config=None):
 
     @app.teardown_appcontext
     def shutdown_session(exception=None):
-        print("per request commit this")
+        app.logger.info("per request commit this")
         pass
 
     return app
