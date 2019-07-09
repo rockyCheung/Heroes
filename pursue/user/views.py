@@ -70,8 +70,8 @@ def register():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        privatekey = base64.encodebytes(os.urandom(32))
-        logging.debug("register privatekey: %s",privatekey)
+        # privatekey = base64.encodebytes(os.urandom(32))
+        # logging.debug("register privatekey: %s",privatekey)
         error = None
 
         if not username:
@@ -85,7 +85,7 @@ def register():
 
         if error is None:
             # the name is available, create the user and go to the login page
-            db.session.add(User(username=username, password=password, privatekey=privatekey))
+            db.session.add(User(username=username, password=password))
             db.session.commit()
             return redirect(url_for("user.login"))
 

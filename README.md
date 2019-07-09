@@ -12,16 +12,20 @@ Heroes是一个python练习项目，采用Flask、SQLAlchemy、Werkzeug实现一
 ```bash
 $ git clone https://github.com/rockyCheung/Heroes.git
 ```
+* 安装
+```
+$ ./install.sh
+```
 * 初始化
 ```bash
 $ cd Heroes
-$ ./clear_data_and_creat_tables.sh
+$ ./init_migrations.sh
 ```
 执行init_db.sh脚本会在Heroes目录下生成instance/pursue.sqlite数据库文件
 
 * 更新数据库变更
 ```
-$ ./db_upgrade.sh
+$ ./db_migrations.sh
 ```
 
 * 启动程序
