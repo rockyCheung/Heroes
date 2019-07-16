@@ -18,7 +18,7 @@ bpp = Blueprint("blog", __name__)
 def index():
     """Show all the posts, most recent first."""
     posts = Post.query.order_by(Post.created.desc()).all()
-    return render_template("blog/index.html", posts=posts)
+    return render_template("stock/pyecharts.html", posts=posts)
 
 
 def get_post(id, check_author=True):

@@ -1,27 +1,84 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Awesome-pyecharts</title>
-    <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='echarts.min.js') }}"></script>
-</head>
-<body>
-    <div id="bar" style="width:1000px; height:600px;"></div>
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %} {% endblock %}</h1>
+<script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='echarts.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='jqmeter.min.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+  <!-- Main -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 offset-2 form-box">
+                <div class="form-top">
+                    <div>
+                        <h1>预测未来5天股票走势</h1>
+                    </div>
+                </div>
+                <div class="form-bottom">
+                    <form method="post">
+                        <div class="form-group">
+                        <label for="stockCode">股票代码</label>
+                        <input tabindex="1" type="text" class="form-control" name="stockCode" id="stockCode" required>
+                        <label for="startDate">上市时间</label>
+                        <input tabindex="1" type="text" name="startDate" id="startDate" class="form-control" required>
+                        </div>
+
+                        <input id="button1" type="button" value="Predict" class="btn btn-primary btn-lg" onclick="stockPredict()">
+
+                    </form>
+                    <div id="schedule" style="width:1000px; height:20px;align:center;"></div>
+                    <div id="bar" style="width:1000px; height:600px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+      <!-- Footer -->
+    <footer class="footer">
+        <div class="container-fluid">
+            <p class="copyright float-right">G-WIL</p>
+        </div>
+    </footer>
     <script>
-        $(
-            function () {
+      stockPredict = function () {
                 var chart = echarts.init(document.getElementById('bar'), 'white', {renderer: 'canvas'});
                 $.ajax({
-                    type: "GET",
-                    url: "http://127.0.0.1:5000/stock/barChart",
+                    type: "POST",
+                    url: "http://127.0.0.1:5000/stock/predict",
                     dataType: 'json',
+                    data:$('form').serialize(),
+                    beforeSend : function(){
+                        $('#schedule').jQMeter({
+                            goal:'$1,000',
+                            raised:'$200',
+                            orientation:'horizontal',
+                            width:'900px',
+                            height:'20px'
+                        });
+                     },
+                    complete: function(){
+                       $('#schedule').jQMeter({
+                            goal:'$1,000',
+                            raised:'$1,000',
+                            orientation:'horizontal',
+                            width:'900px',
+                            height:'20px'
+                        });
+                     },
                     success: function (result) {
                         chart.setOption(result);
                     }
                 });
             }
-        )
+    $("body").keydown(function() {
+             if (event.keyCode == "13") {//keyCode=13是回车键
+                 $('#button1').click();
+             }
+     });
     </script>
-</body>
-</html>
+{% endblock %}
+
+

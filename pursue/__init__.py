@@ -10,9 +10,11 @@ from flask_sqlalchemy import SQLAlchemy
 import logging
 
 __version__ = (1, 0, 0, "dev")
-
-
-logging.basicConfig(filename='pursue.log',level=logging.DEBUG)
+logging.basicConfig(level=logging.DEBUG,
+                    filename='pursue.log',
+                    datefmt='%Y/%m/%d %H:%M:%S',
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(lineno)d - %(module)s - %(message)s')
+# logger = logging.getLogger(__name__)
 db = SQLAlchemy()
 
 class RequestFormatter(logging.Formatter):

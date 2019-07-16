@@ -1,24 +1,35 @@
 <!doctype html>
 <title>{% block title %}{% endblock %} - Pursue</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<nav>
-  <h1><a href="{{ url_for('index') }}">INDEX</a></h1>
-  <ul>
-    {% if g.user %}
-      <li><span>{{ g.user['username'] }}</span>
-      <li><a href="{{ url_for('user.logout') }}">Log Out</a>
-    {% else %}
-      <li><a href="{{ url_for('user.register') }}">Register</a>
-      <li><a href="{{ url_for('user.login') }}">Log In</a>
-    {% endif %}
-  </ul>
-</nav>
-<section class="content">
-  <header>
+<link rel="stylesheet" href="{{ url_for('static', filename='login-form.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='raneto.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='ghostdown.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='zocial.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='login-style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='raneto.rtl.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='solarized_light.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+<body class="page-home">
+  <header class="header">
+      <div class="container-fluid">
+          <div class="row">
+              <div class="col-sm-6">
+                <a href="{{ url_for('index') }}" class="pull-left">首页</a>
+              </div>
+              <div class="col-sm-6">
+                    {% if g.user %}
+                    <span>{{ g.user['username'] }}</span>
+                    <a href="{{ url_for('user.logout') }}" class="btn btn-info pull-right">Log Out</a>
+                    {% else %}
+                    <a href="{{ url_for('user.register') }}" class="btn btn-info pull-right">Register</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="{{ url_for('user.login') }}" class="btn btn-info pull-right">Log In</a>
+                    {% endif %}
+              </div>
+        </div>
+      </div>
     {% block header %}{% endblock %}
   </header>
   {% for message in get_flashed_messages() %}
     <div class="flash">{{ message }}</div>
   {% endfor %}
   {% block content %}{% endblock %}
-</section>
+</body>

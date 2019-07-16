@@ -5,61 +5,26 @@ from pursue.user.views import login_required
 from pyecharts.charts import Bar, Kline
 from pyecharts import options as opts
 from jinja2 import Markup
+from pursue.for_future.predict import PredictFuture
+from pursue.for_future.stock.stockdata import StockData
+from datetime import datetime
+import pandas as pd
+import logging
+from flask import request
+import time
+from pandas import to_datetime
+import numpy as np
 
 bpp = Blueprint("stock_for_page", __name__ ,url_prefix="/stock")
 
-data = [
-    [2320.26, 2320.26, 2287.3, 2362.94],
-    [2300, 2291.3, 2288.26, 2308.38],
-    [2295.35, 2346.5, 2295.35, 2345.92],
-    [2347.22, 2358.98, 2337.35, 2363.8],
-    [2360.75, 2382.48, 2347.89, 2383.76],
-    [2383.43, 2385.42, 2371.23, 2391.82],
-    [2377.41, 2419.02, 2369.57, 2421.15],
-    [2425.92, 2428.15, 2417.58, 2440.38],
-    [2411, 2433.13, 2403.3, 2437.42],
-    [2432.68, 2334.48, 2427.7, 2441.73],
-    [2430.69, 2418.53, 2394.22, 2433.89],
-    [2416.62, 2432.4, 2414.4, 2443.03],
-    [2441.91, 2421.56, 2418.43, 2444.8],
-    [2420.26, 2382.91, 2373.53, 2427.07],
-    [2383.49, 2397.18, 2370.61, 2397.94],
-    [2378.82, 2325.95, 2309.17, 2378.82],
-    [2322.94, 2314.16, 2308.76, 2330.88],
-    [2320.62, 2325.82, 2315.01, 2338.78],
-    [2313.74, 2293.34, 2289.89, 2340.71],
-    [2297.77, 2313.22, 2292.03, 2324.63],
-    [2322.32, 2365.59, 2308.92, 2366.16],
-    [2364.54, 2359.51, 2330.86, 2369.65],
-    [2332.08, 2273.4, 2259.25, 2333.54],
-    [2274.81, 2326.31, 2270.1, 2328.14],
-    [2333.61, 2347.18, 2321.6, 2351.44],
-    [2340.44, 2324.29, 2304.27, 2352.02],
-    [2326.42, 2318.61, 2314.59, 2333.67],
-    [2314.68, 2310.59, 2296.58, 2320.96],
-    [2309.16, 2286.6, 2264.83, 2333.29],
-    [2282.17, 2263.97, 2253.25, 2286.33],
-    [2255.77, 2270.28, 2253.31, 2276.22],
-]
 
 
-def kline_base() -> Kline:
+
+def kline_datazoom_slider(times,stock_data) -> Kline:
     c = (
         Kline()
-        .add_xaxis(["2017/7/{}".format(i + 1) for i in range(31)])
-        .add_yaxis("kline", data)
-        .set_global_opts(
-            yaxis_opts=opts.AxisOpts(is_scale=True),
-            xaxis_opts=opts.AxisOpts(is_scale=True),
-            title_opts=opts.TitleOpts(title="Kline-基本示例"),
-        )
-    )
-    return c
-def kline_datazoom_slider() -> Kline:
-    c = (
-        Kline()
-        .add_xaxis(["2017/7/{}".format(i + 1) for i in range(31)])
-        .add_yaxis("kline", data)
+        .add_xaxis(times)
+        .add_yaxis("kline", stock_data)
         .set_global_opts(
             xaxis_opts=opts.AxisOpts(is_scale=True),
             yaxis_opts=opts.AxisOpts(
@@ -69,44 +34,53 @@ def kline_datazoom_slider() -> Kline:
                 ),
             ),
             datazoom_opts=[opts.DataZoomOpts()],
-            title_opts=opts.TitleOpts(title="Kline-DataZoom-slider"),
+            title_opts=opts.TitleOpts(title="未来5天股票走势"),
         )
     )
     return c
-
-def bar_base() -> Bar:
-    c = (
-        Bar()
-        .add_xaxis(["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"])
-        .add_yaxis("商家A", [5, 20, 36, 10, 75, 90])
-        .add_yaxis("商家B", [15, 25, 16, 55, 48, 8])
-        .set_global_opts(title_opts=opts.TitleOpts(title="Bar-基本示例", subtitle="我是副标题"))
-    )
-    return c
-
-@bpp.route("/bar", methods=["GET"])
-@login_required
-def bar():
-    c = bar_base()
-    return Markup(c.render_embed())
-
-@bpp.route("/kline", methods=["GET"])
-@login_required
-def kline():
-    c = kline_datazoom_slider()
-    return Markup(c.render_embed())
 
 '''
 动静分离模式
 '''
 @bpp.route("/")
-@login_required
 def index():
     return render_template("stock/pyecharts.html")
 
 
-@bpp.route("/barChart")
-@login_required
-def get_bar_chart():
-    c = bar_base()
+@bpp.route("/predict", methods=["GET","POST"])
+def predict():
+    #页面用户输入股票代码、公司上市时间
+    stockCode = request.form["stockCode"]
+    startDate = request.form["startDate"]
+    today = time.strftime("%Y-%m-%d", time.localtime())
+    logging.info("the stock code: %s, IPO date: %s,predict date: %s",stockCode,startDate,today)
+    obj = StockData(stockCode)  # 创建股票交易类对象
+    # 获取股价变动的历史数据
+    data = obj.history(start=startDate, end=today)
+    times = data.date.values
+    stock_data = data[['open','close','low','high']].values
+   # 预测未来5天内收盘价 linear 模型
+    closeValue = {'ds': data['date'], 'y': data['close']}
+    #logistic 模型
+    # closeValue = {'ds': data['date'], 'y': data['close'], 'cap': data['high'], 'floor': data['low'], 'low': data['low']}
+    df_close_value = pd.DataFrame(closeValue)
+    # 预测数据linear/logistic
+    predict_close_future = PredictFuture(growth='linear', data_frame=df_close_value)
+    predict_close_future.seeFuture(periods=1, freq='D', include_history=False)
+    df_dt = to_datetime(predict_close_future._future.ds, format="%Y-%m-%d")
+    df_dt_str = df_dt.apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
+    forecast_trend = predict_close_future._forecast.trend
+    forecast_yhat = predict_close_future._forecast.yhat
+    forecast_yhat_lower = predict_close_future._forecast.yhat_lower
+    forecast_yhat_upper = predict_close_future._forecast.yhat_upper
+    forecast_trend_fmt = forecast_trend.apply(lambda x:('%.2f') % x)
+    forecast_yhat_fmt = forecast_yhat.apply(lambda x: ('%.2f') % x)
+    forecast_yhat_lower_fmt = forecast_yhat_lower.apply(lambda x: ('%.2f') % x)
+    forecast_yhat_upper_fmt = forecast_yhat_upper.apply(lambda x: ('%.2f') % x)
+    forecast_data_fmt = {'yhat':forecast_yhat_fmt.values.tolist(),'trend':forecast_trend_fmt.values.tolist(),'yhat_lower':forecast_yhat_lower_fmt.values.tolist(),'yhat_upper':forecast_yhat_upper_fmt.values.tolist()}
+    times_list = times.tolist()
+    stock_data_list = stock_data.tolist()
+    times_list = times_list + df_dt_str.values.tolist()
+    stock_data_list = stock_data_list + pd.DataFrame(forecast_data_fmt).values.tolist()
+    c = kline_datazoom_slider(times_list,stock_data_list)
     return c.dump_options()
